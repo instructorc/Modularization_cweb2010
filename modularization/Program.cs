@@ -33,16 +33,16 @@ namespace modularization
 
 
                 //Create a module that defensively program
-                row = checkRange(row);
+                checkRange(ref row);
 
                 //Create a Module to get column
                 column = getColumn();
 
                 //Create a module that defensively program
-                column = checkRange(column);
+                checkRange(ref column);
 
                 //Create a module that output selection and accumulates the price
-                priceAccum = accumPrice(product, cost, priceAccum, row, column);
+                accumPrice(product, cost, ref priceAccum, row, column);
 
                 //module that ask for priming value
                 sentinel = getPrimer();
@@ -96,20 +96,21 @@ namespace modularization
             return column = Convert.ToInt32(Console.ReadLine());
         }
         //Method that defensively programs to enforce a particular range of numbers
-        static int checkRange(int num)
+        static void checkRange(ref int num)
         {
-            while ((num < 0) || (num > 3))
+            while ((num < 0) || (num > 2))
             {
                 Console.WriteLine("Invalid entry, please enter a number between 0 and 2");
                 num = Convert.ToInt32(Console.ReadLine());
             }
-            return num;
+            
+           
         }
 
-        static double accumPrice(string [ , ] prod, double [ , ] price, double accum, int row, int column)
+        static void accumPrice(string [ , ] prod, double [ , ] price, ref double accum, int row, int column)
         {
            Console.WriteLine($"You have selected {prod[row, column]} for {price[row, column].ToString("c")}");
-           return accum += price[row, column];
+           accum += price[row, column];
         }
 
         static void outputPrice(double totalPrice)
